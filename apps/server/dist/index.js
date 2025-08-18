@@ -9,6 +9,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 // Import our new auth router
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const car_routes_1 = __importDefault(require("./routes/car.routes"));
+const upload_routes_1 = __importDefault(require("./routes/upload.routes"));
 // Load environment variables
 dotenv_1.default.config();
 // Initialize the Express application
@@ -21,6 +22,7 @@ app.use(express_1.default.json());
 // All auth routes will be prefixed with /api/auth
 app.use('/api/auth', auth_routes_1.default);
 app.use('/api/cars', car_routes_1.default);
+app.use('/api/uploads', upload_routes_1.default);
 // A simple test route to make sure the server is working
 app.get('/', (req, res) => {
     res.json({ message: 'Hello from the RentoRide server!' });

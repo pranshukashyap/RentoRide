@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 // Import our new auth router
 import authRoutes from './routes/auth.routes';
 import carRoutes from './routes/car.routes';
-
+import uploadRoutes from './routes/upload.routes'; 
 // Load environment variables
 dotenv.config();
 
@@ -21,6 +21,7 @@ app.use(express.json());
 // All auth routes will be prefixed with /api/auth
 app.use('/api/auth', authRoutes);
 app.use('/api/cars', carRoutes); 
+app.use('/api/uploads', uploadRoutes); 
 
 // A simple test route to make sure the server is working
 app.get('/', (req: Request, res: Response) => {
