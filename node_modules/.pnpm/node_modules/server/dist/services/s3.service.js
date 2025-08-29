@@ -17,17 +17,15 @@ const s3Client = new client_s3_1.S3Client({
 });
 const BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME;
 // This function generates a secure, one-time URL for uploading a file
-const generateUploadUrl = async (fileName) => {
-    // Generate a unique name for the file to prevent overwrites
+const generateUploadUrl = async (fileName, fileType) => {
     const randomBytes = crypto_1.default.randomBytes(16).toString('hex');
     const uniqueFileName = `${randomBytes}-${fileName}`;
     const command = new client_s3_1.PutObjectCommand({
         Bucket: BUCKET_NAME,
         Key: uniqueFileName,
+        ContentType: fileType, // <-- ADD THIS LINE
     });
-    // The URL is valid for 10 minutes
     const uploadUrl = await (0, s3_request_presigner_1.getSignedUrl)(s3Client, command, { expiresIn: 600 });
-    // Return the upload URL and the final key to save in the database
     return {
         uploadUrl,
         key: uniqueFileName

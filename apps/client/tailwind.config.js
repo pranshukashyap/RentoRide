@@ -1,11 +1,19 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+import { fontFamily } from 'tailwindcss/defaultTheme';
+
+export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        // Add our custom fonts
+        sans: ['Inter', ...fontFamily.sans],
+        display: ['Poppins', ...fontFamily.sans],
+      },
+    },
   },
   plugins: [],
 }

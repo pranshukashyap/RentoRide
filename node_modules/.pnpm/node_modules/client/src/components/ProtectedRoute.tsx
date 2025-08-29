@@ -1,19 +1,25 @@
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import type { ReactElement } from "react";
 
 interface ProtectedRouteProps {
-  children: JSX.Element;
+  children: ReactElement;
 }
-
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
 
+  // While we are checking for the token, show a loading message
+  if (isLoading) {
+    return <div>Loading session...</div>;
+  }
+
+  // After loading, if not authenticated, redirect
   if (!isAuthenticated) {
-    // If the user is not authenticated, redirect them to the /login page
     return <Navigate to="/login" replace />;
   }
 
-  // If the user is authenticated, render the child component (the protected page)
+  // If loading is finished and user is authenticated, show the page
   return children;
 };
 

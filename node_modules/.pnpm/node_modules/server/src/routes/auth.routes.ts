@@ -1,10 +1,8 @@
 import { Router, Request, Response } from 'express';
 import { registerUser, loginUser } from '../services/auth.service';
-import { authenticateToken } from '../middleware/auth.middleware';
 
 const router = Router();
 
-// POST /api/auth/register
 router.post('/register', async (req: Request, res: Response) => {
   try {
     const result = await registerUser(req.body);
@@ -17,7 +15,6 @@ router.post('/register', async (req: Request, res: Response) => {
   }
 });
 
-// POST /api/auth/login
 router.post('/login', async (req: Request, res: Response) => {
   try {
     const tokens = await loginUser(req.body);
@@ -28,14 +25,6 @@ router.post('/login', async (req: Request, res: Response) => {
   } catch (error: any) {
     res.status(401).json({ message: 'Invalid email or password' });
   }
-});
-
-// GET /api/auth/profile (This is our new protected route)
-router.get('/profile', authenticateToken, (req: Request, res: Response) => {
-  res.status(200).json({
-    message: 'This is a protected route!',
-    userProfile: req.user,
-  });
 });
 
 export default router;
